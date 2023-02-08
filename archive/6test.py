@@ -76,3 +76,44 @@ if os.path.exists(write_file1):
 else:
   print("The file does not exist")
 
+print("--------------------------------")
+
+print("higher order functions")
+
+def add(n1,n2):
+  return n1+n2
+
+def subtract(n1,n2):
+  return n1-n2
+
+def multiply(n1,n2):
+  return n1*n2
+
+def divide(n1,n2):
+  return n1/n2
+
+def calculator(n1,n2, func):
+  return func(n1,n2)
+
+num1 = 2
+num2 = 3
+x = calculator(num1,num2,add)
+print(f"calculator num1: {num1}, num2: {num2}, function: add,      result: {x}, expected: {num1+num2}")
+x = calculator(num1,num2,subtract)
+print(f"calculator num1: {num1}, num2: {num2}, function: subtract, result: {x}, expected: {num1-num2}")
+x = calculator(num1,num2,multiply)
+print(f"calculator num1: {num1}, num2: {num2}, function: multiply, result: {x}, expected: {num1*num2}")
+x = calculator(num1,num2,divide)
+print(f"calculator num1: {num1}, num2: {num2}, function: divide,   result: {x}, expected: {num1/num2}")
+
+
+
+print("--------------------------------")
+
+loremipsum_file = "./txt/loremipsum_short.txt"
+with open(loremipsum_file, "r") as file:
+  x = file.read()
+  print(x)
+
+
+
