@@ -36,3 +36,38 @@ print(f"the average temperature is: {average_temp}")
 print("--------------------------------")
 print(f"the average temperature (using data['temp'].mean()) is: {data['temp'].mean()}")
 
+
+print("--------------------------------")
+print(data.condition)
+
+x = data[data.day == 'Monday']
+
+print(x)
+
+
+print("--------------------------------")
+
+
+x = data[ data.temp == data.temp.max() ]
+print(x)
+
+
+print("--------------------------------")
+
+monday = data[data.day == 'Monday']
+
+print(monday.condition)
+
+
+print("--------------------------------")
+
+
+# Data frame from scratch
+
+data_dict = {
+    "students" : ["Amy","James","Angela"],
+    "scores" : [76,56,65]
+}
+
+data = pandas.DataFrame(data_dict)
+data.to_csv("new_data.csv")
