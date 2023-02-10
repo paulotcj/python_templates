@@ -1,73 +1,21 @@
 import pandas
 
-filename = "weather_data.csv"
+filename = "2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv"
+
 
 data = pandas.read_csv(filename)
-print("--------------------------------")
-print("printing data")
-print(data)
 
-print("--------------------------------")
-print("printing data[\"temp\"]")
-print(data["temp"])
+grey_squirrels_count = len( data[ data["Primary Fur Color"] == "Gray" ] )
+red_squirrels_count = len( data[ data["Primary Fur Color"] == "Cinnamon" ] )
+black_squirrels_count = len( data[ data["Primary Fur Color"] == "Black" ] )
 
-print("--------------------------------")
-print("printing types")
-print(type(data))
-print(type(data["temp"]))
-
-print("--------------------------------")
-print("data to dictionary")
-data_dict = data.to_dict()
-print(data_dict)
-print("--------------------------------")
-print(data_dict['day'])
-
-temp_list = data['temp'].to_list()
-
-print(temp_list)
-
-print("--------------------------------")
-
-average_temp = sum(temp_list) / len(temp_list)
-print(f"the average temperature is: {average_temp}")
-
-
-print("--------------------------------")
-print(f"the average temperature (using data['temp'].mean()) is: {data['temp'].mean()}")
-
-
-print("--------------------------------")
-print(data.condition)
-
-x = data[data.day == 'Monday']
-
-print(x)
-
-
-print("--------------------------------")
-
-
-x = data[ data.temp == data.temp.max() ]
-print(x)
-
-
-print("--------------------------------")
-
-monday = data[data.day == 'Monday']
-
-print(monday.condition)
-
-
-print("--------------------------------")
-
-
-# Data frame from scratch
+print(f"Counts - Grey:{grey_squirrels_count}, Red:{red_squirrels_count}, Black:{black_squirrels_count}")
 
 data_dict = {
-    "students" : ["Amy","James","Angela"],
-    "scores" : [76,56,65]
+    "Fur Color" : ["Gray","Cinnamon","Black"],
+    "Count" : [grey_squirrels_count, red_squirrels_count, black_squirrels_count]
 }
 
-data = pandas.DataFrame(data_dict)
-data.to_csv("new_data.csv")
+df = pandas.DataFrame(data_dict)
+
+df.to_csv("squirrel_count.csv")
