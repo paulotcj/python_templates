@@ -7,7 +7,7 @@ with open(filename, "r") as data_file:
     for row in data:
         print(row)
 
-print("---------------------------")
+print("--------------------------------")
 
 filename = "weather_data.csv"
 
@@ -19,5 +19,5 @@ with open(filename, "r") as data_file:
         
     print(temperatures)
 
-print("---------------------------")    
+print("--------------------------------") 
 
