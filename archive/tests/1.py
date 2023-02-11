@@ -44,7 +44,8 @@ class Product:
         self.manufacturer = kwargs["manufacturer"]
         # self.barcode = kwargs.["barcode"] -> Error
         self.barcode = kwargs.get("barcode")
+        self.bestbefore = kwargs.get("bestbefore")
 
 prod1 = Product(name = "Pepsi" , manufacturer = "Pepsico")
 
-print(f"prod1.name: {prod1.name}, prod1.manufacturer: {prod1.manufacturer}, prod1.barcode: {prod1.barcode}")
+print(f"prod1.name: {prod1.name}, prod1.manufacturer: {prod1.manufacturer}, \n   prod1.barcode: {prod1.barcode}, prod1.bestbefore: {prod1.bestbefore}")
