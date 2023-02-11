@@ -28,11 +28,11 @@ print(f"Even numbers: {x}")
 
 print("--------------------------------")
 
-filename = "./txt/common_nums1.txt"
+filename = "../txt/common_nums1.txt"
 with open(filename) as file:
     file1_data = file.readlines()
 
-filename = "./txt/common_nums2.txt"
+filename = "../txt/common_nums2.txt"
 with open(filename) as file:
     file2_data = file.readlines()
 

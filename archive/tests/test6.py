@@ -1,6 +1,6 @@
 
 
-loremipsum_file = "./txt/loremipsum.txt"
+loremipsum_file = "../txt/loremipsum.txt"
 
 f = open(loremipsum_file, "r")
 print(f.read())
@@ -27,7 +27,7 @@ f.close()
 
 print("--------------------------------")
 
-write_file1 = "./txt/write_test1.txt"
+write_file1 = "../txt/write_test1.txt"
 
 f = open(write_file1, "w")
 f.write("This file will never grow more than 5 lines - 1\n")
@@ -43,7 +43,7 @@ print(f.read())
 f.close()
 
 print("--------------------------------")
-write_file1 = "./txt/write_test2.txt"
+write_file1 = "../txt/write_test2.txt"
 f = open(write_file1, "a")
 f.write("This file will grow by 1 line every time we run this program\n")
 f.close()
@@ -54,7 +54,7 @@ print(f.read())
 f.close()
 print("--------------------------------")
 
-write_file1 = "./txt/write_test3.txt"
+write_file1 = "../txt/write_test3.txt"
 f = open(write_file1, "w")
 f.write("qwertyuiopasdfghjklzxcvbnm\n")
 f.write("qwertyuiopasdfghjklzxcvbnm\n")
@@ -110,7 +110,7 @@ print(f"calculator num1: {num1}, num2: {num2}, function: divide,   result: {x}, 
 
 print("--------------------------------")
 
-loremipsum_file = "./txt/loremipsum_short.txt"
+loremipsum_file = "../txt/loremipsum_short.txt"
 with open(loremipsum_file, "r") as file:
   x = file.read()
   print(x)
