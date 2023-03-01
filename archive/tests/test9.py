@@ -103,9 +103,12 @@ print("Kanye says:", quote)
 
 print("--------------------------------")
 
-app_username = "xxxxx"
-app_pass = "yyyyyy"
-app_address = "https://xxxxxxxxxx.com"
+app_username = "xxxxxxxxx"
+app_pass = "xxxxxxxxxx"
+app_address = "xxxxxxxxxxxx"
+app_endpoint = "xxxxxxxxxxxxx"
+app_token = ""
+app_requestr_headers = None
 
 json_params = {
     "username" : app_username,
@@ -113,12 +116,31 @@ json_params = {
 }
 
 
-response = requests.post( url = app_address, json=json_params )
+response = requests.post( url = app_address + app_endpoint, json=json_params )
 
 
 print("response:",response)
 
 print("response.json():",response.json())
 print("--------------------------------")
+
+app_token = response.json()["token"]
 print("token:")
-print(response.json()["token"])
+print(app_token)
+
+print("--------------------------------")
+
+app_endpoint = "xxxxxxxxxxxxx"
+
+app_requestr_headers =  {"Authorization": f"Bearer {app_token}"}
+
+print("app_address + app_endpoint: ",app_address + app_endpoint)
+print("app_requestr_headers:", app_requestr_headers)
+
+print("--------------------------------")
+
+response = requests.get( url = app_address + app_endpoint, headers=app_requestr_headers )
+
+print("response.json():",response.json())
+
+#it worked
