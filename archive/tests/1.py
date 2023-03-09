@@ -33,3 +33,26 @@ print(test)
 print("--------------------------------")
 
 
+mygenerator = (x*x for x in range(3))
+
+for i in mygenerator:
+    print(i)
+
+print("generator is done - nothing is produced")
+for i in mygenerator:
+    print(i)    
+
+print("--------------------------------")
+def create_generator():
+    mylist = range(3)
+    for i in mylist:
+        yield i*i    
+
+mygenerator = create_generator() # create a generator     
+print(mygenerator) # mygenerator is an object!   
+
+for i in mygenerator:
+    print(i)
+
+for i in mygenerator:
+    print(i)    
