@@ -24,7 +24,12 @@ element.send_keys("secretpassword")
 
 # this part works, but i am disabling it in order to avoid any kind  of issue
 # element = driver.find_element(by=By.ID, value="loginbutton")
-# element.click()demoBrowser.py
+# element.click()
 
-# time.sleep(20)
+time.sleep(5)
+element = driver.find_element(by=By.LINK_TEXT, value="Forgot account?")
+element.click()
+
+
+time.sleep(20)
 driver.close()
