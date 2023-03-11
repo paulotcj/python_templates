@@ -11,32 +11,24 @@ driver.maximize_window()
 url = "https://www.selenium.dev/selenium/web/window_switching_tests/page_with_frame.html"
 driver.get(url)
 print(driver.current_url)
-
 # specify the amount of time the WebDriver instance i.e. the driver should wait when searching for an element if it is not immediately present in the HTML DOM
-driver.implicitly_wait(5)
+# driver.implicitly_wait(5)
+
 # --------------------
-element = driver.find_element(By.LINK_TEXT, "Open new window")
-element.click()
+# # we would be unable to find the element below, because it's inside an iframe
+# element = driver.find_element(By.LINK_TEXT, "I go to a target")
+# element.click()
 
-# url = "https://www.selenium.dev/selenium/web/window_switching_tests/simple_page.html"
-# driver.get(url)
-# element = driver.find_element(By.XPATH, '/html/body/div')
-# print(element.text)
-# # should show: Simple page with simple test.
+# instead we need to execute a 'switch to'
+iframe = driver.find_element(By.NAME, 'myframe')
+driver.switch_to.frame(iframe)
 
-#since we clicked on the link and it opened a new window, we should have 2 windows in total
-# therefore, we have our original window at windows[0] and the new window at windows[1]
-windows = driver.window_handles
-driver.switch_to.window( windows[1] )
 element = driver.find_element(By.XPATH, '/html/body/div')
-print(element.text)
-# should show: Simple page with simple test.
+print("It should display 'Simple page with simple test.' ->",element.text)
+
 
 
 # --------------------
-
-
-
 
 time.sleep(7)
 driver.close()
