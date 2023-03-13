@@ -1,0 +1,36 @@
+In order to run pytest execute:
+    > py.test
+you can also run '-v' as verbose and '-s' to print all console logs
+    > py.test -v -s
+
+
+In order to run a specific file you can run:    
+    > py.test file.py -v -s
+or using the files in this project:
+    > py.test test_demo1.py -v -s
+
+In order to run tests that contain a specific keyword, run:
+    > py.test -k keyword -v -s
+or using the files in this project:    
+    > py.test -k SomeSpecificKeyWord -v -s
+
+
+In order to run tests that contain are marked with a decorator, run:
+    > py.test -m mark -v -s
+or using the files in this project:    
+    > py.test -m SpecificMark01 -v -s
+
+
+Test cases marked with '@pytest.mark.skip' will be skipped
+
+
+In order to use a global fixture, create a file named 'conftest.py' and
+add your fixture, something like:
+    @pytest.fixture()
+    def setup():
+        print("fixture() - this will be executed first")
+        yield
+        print("fixture() - this will be executed last")
+
+And then your method signature should pass the fixture name, for instance:
+    def test_fixtureDemo(setup)
