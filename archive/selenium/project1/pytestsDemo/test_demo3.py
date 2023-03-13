@@ -8,9 +8,9 @@ import pytest
 
 @pytest.fixture()
 def setup():
-    print("fixture() - this will be executed first")
+    print("setup() - this will be executed first")
     yield
-    print("fixture() - this will be executed last")
+    print("setup() - this will be executed last")
 
 def test_fixtureDemo(setup):
     print("steps being executed in the test_fixtureDemo")
