@@ -29,7 +29,8 @@ class AppComponentsExcel:
                 "order" : row_data[1],
                 "column" : row_data[2],
                 "column_type" : row_data[3],
-                "data_type" : row_data[4]
+                "data_type" : row_data[4],
+                "annotations" : row_data[5],
             }
             self.appComponent_metadata.append(dict_row)
 
@@ -51,10 +52,12 @@ class AppComponentsExcel:
             for col in row_data:
                 dict_row = {
                     "table" : self.appComponent_metadata[count]["table"],
+                    "order" : self.appComponent_metadata[count]["order"],
                     "column" : self.appComponent_metadata[count]["column"],
                     "value" : col,
                     "column_type" : self.appComponent_metadata[count]["column_type"],
-                    "data_type" : self.appComponent_metadata[count]["data_type"]
+                    "data_type" : self.appComponent_metadata[count]["data_type"],
+                    "annotations" : self.appComponent_metadata[count]["annotations"]
                 }
                 new_row.append(dict_row)
                 count += 1
@@ -72,59 +75,109 @@ class AppComponentsExcel:
           
 
 
-
+#---------------------------------------------------------    
 class AppComponentsSQL:
 
-    inserts = ""
+    #---------------------------------------------------------    
+    def __sql_value_tostring(self, value, data_type):
+        new_value = None
+        if value == None:
+            new_value = "NULL"
+        elif data_type == "string":
+            temp = str( value ).replace("\n","")
+            new_value = f'\'{  temp  }\''
+        elif data_type == "bool":
+            new_value = str( value ).upper()
+        else:
+            new_value = str( value )
 
-    def Inserts(self, appComponent_metadata, appComponent_data):
+        return new_value
+    #---------------------------------------------------------    
+
+    #---------------------------------------------------------    
+    def Inserts(self, appComponent_data):
         #----
-        columns = ""
+        columns_list = []
         for row in appComponent_data[0]:
             if row["column_type"] == "column":
-                columns += f'{ row["column"]}, '
-        columns = f'( { str(columns).removesuffix(", ") } )'
+
+                columns_list.append( row["column"] )
+
+        temp = ', '.join(columns_list)
+        columns = f'( { temp } )'
 
         #----
-        insert_body = ""
+        row_list = []
         for row in appComponent_data:
-            insert_body_row = ""
+            value_col_list = []
             for col in row:
 
                 if col["column_type"] == "column":
-                    value = ""
+                    value = self.__sql_value_tostring(col["value"] , col["data_type"])
 
-                    if col["value"] == None:
-                        value = "NULL"
-                    elif col["data_type"] == "string":
-                        temp = str(col["value"]).replace("\n","")
-                        value = f'\'{  temp  }\''
-                    elif col["data_type"] == "bool":
-                        value = str(col["value"]).upper()
-                    else:
-                        value = str(col["value"])
-
-                    insert_body_row += f'{ value }, '
+                    value_col_list.append(value)
                 # end of if col["column_type"] == "column":
             #end of for col in row:         
-            insert_body += f'( { str(insert_body_row).removesuffix(", ") } ),\n'
+
+            temp = ", ".join(value_col_list)
+            row_list.append( f"( {temp} )" )
         #end of for row in appComponent_data:
-        insert_body = insert_body.removesuffix(",\n")
+        
+        insert_values = ",\n".join(row_list)
 
         #----
-                    
+    
+        #getting data from row[0] and column[0] -> then ["table"]
+        table_name = appComponent_data[0][0]["table"]
+        insert_header = f'INSERT INTO TABLE { table_name }\n{ columns }\nVALUES'
+        inserts = f'{insert_header}\n{insert_values}\nON CONFLICT DO NOTHING;'
 
-        insert_header = f'INSERT INTO TABLE { appComponent_metadata[0]["table"] }\n{ columns }\nVALUES'
-        self.inserts = f'{insert_header}\n{insert_body}\nON CONFLICT DO NOTHING;'
+        print(inserts)
 
-        print(self.inserts)
-        # print("len of inserts:", len(inserts))
-        # print("len of insert_body:", len(insert_body))
 
-        return self.inserts
+        return inserts
 
     #end of Inserts
     #---------------------------------------------------------
+
+    #---------------------------------------------------------    
+    def Updates(self, appComponent_data):
+
+        table_name = appComponent_data[0][0]["table"]
+        row_list = []
+        for row in appComponent_data:
+            where_list = []
+            col_list = []
+            for col in row:
+                if col["column_type"] != "column":
+                    continue
+                
+                #----
+                value = self.__sql_value_tostring(col["value"], col["data_type"])
+                temp_col = f'{col["column"]} = {value}'
+
+                if str(col["annotations"]).lower() == "primarykey":
+                    where_list.append(temp_col)
+                else:
+                    col_list.append(temp_col)
+                #----
+            #end of for col in row:
+
+            temp_col = ", ".join(col_list)
+            temp_where =  " AND ".join(where_list)
+            temp_update =  f'UPDATE {table_name} SET {temp_col} WHERE {temp_where};'
+
+            row_list.append(temp_update)
+        #end of for row in appComponent_data:
+
+
+        update = "\n".join(row_list)
+
+        # print(update)
+
+        return update
+    #end of Updates(self, appComponent_data):
+    #---------------------------------------------------------            
 
 #end of AppComponentsSQL
 #---------------------------------------------------------    
@@ -142,16 +195,18 @@ dbscripts = AppComponentsSQL()
 #Build inserts
 # inserts should allow conflict
 
-dbscripts.Inserts(obj_excel.appComponent_metadata, obj_excel.appComponent_data)
+# inserts = dbscripts.Inserts(obj_excel.appComponent_data)
 
 # with open('appcomponent_inserts.sql', 'w') as file:
-#     file.write(dbscripts.inserts)
+#     file.write(inserts)
 
 # -----------------------------------------------
 #Build updates
 #  updates should be straight forward, and they are not supposed to fail
 
-
+updates = dbscripts.Updates(obj_excel.appComponent_data)
+with open('appcomponent_updates.sql', 'w') as file:
+    file.write(updates)
 
 # -----------------------------------------------
 #Build migrations
