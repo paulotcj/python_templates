@@ -1,5 +1,11 @@
 from openpyxl import load_workbook
 
+class CustomUtils:
+    def KeyValueString_ToDict(param_string):
+        res = param_string.split(',')
+        res = { i.split('=')[0] : i.split('=')[1] for i in res}
+        return res
+
 class AppComponentsExcel:
     local_filename = ""
     workbook = None
@@ -73,23 +79,34 @@ class AppComponentsExcel:
 #end of class AppComponentsExcel
 #---------------------------------------------------------
           
-
-
 #---------------------------------------------------------    
 class AppComponentsSQL:
 
     #---------------------------------------------------------    
-    def __sql_value_tostring(self, value, data_type):
-        new_value = None
-        if value == None:
-            new_value = "NULL"
+    def __sql_value_tostring(self, value, data_type, annotations):
+        
+        new_value = "" if value == None else value
+        annon_dict = CustomUtils.KeyValueString_ToDict(annotations)
+        
+
+        if new_value == "":
+
+            nullable = True if annon_dict.get("nullable") == "true" else False
+            default = "''" if annon_dict.get("default") == None else annon_dict.get("default")
+
+            if nullable == True:
+                new_value = "NULL"
+            else:
+                new_value = default
+            #-------------
+
         elif data_type == "string":
-            temp = str( value ).replace("\n","")
+            temp = str( new_value ).replace("\n","")
             new_value = f'\'{  temp  }\''
         elif data_type == "bool":
-            new_value = str( value ).upper()
+            new_value = str( new_value ).upper()
         else:
-            new_value = str( value )
+            new_value = str( new_value )
 
         return new_value
     #---------------------------------------------------------    
@@ -113,7 +130,7 @@ class AppComponentsSQL:
             for col in row:
 
                 if col["column_type"] == "column":
-                    value = self.__sql_value_tostring(col["value"] , col["data_type"])
+                    value = self.__sql_value_tostring(col["value"] , col["data_type"], col["annotations"])
 
                     value_col_list.append(value)
                 # end of if col["column_type"] == "column":
@@ -129,10 +146,8 @@ class AppComponentsSQL:
     
         #getting data from row[0] and column[0] -> then ["table"]
         table_name = appComponent_data[0][0]["table"]
-        insert_header = f'INSERT INTO TABLE { table_name }\n{ columns }\nVALUES'
+        insert_header = f'INSERT INTO { table_name }\n{ columns }\nVALUES'
         inserts = f'{insert_header}\n{insert_values}\nON CONFLICT DO NOTHING;'
-
-        print(inserts)
 
 
         return inserts
@@ -153,10 +168,10 @@ class AppComponentsSQL:
                     continue
                 
                 #----
-                value = self.__sql_value_tostring(col["value"], col["data_type"])
+                value = self.__sql_value_tostring(col["value"], col["data_type"], col["annotations"])
                 temp_col = f'{col["column"]} = {value}'
 
-                if str(col["annotations"]).lower() == "primarykey":
+                if "primarykey=true" in str(col["annotations"]).lower():
                     where_list.append(temp_col)
                 else:
                     col_list.append(temp_col)
@@ -195,21 +210,23 @@ dbscripts = AppComponentsSQL()
 #Build inserts
 # inserts should allow conflict
 
-# inserts = dbscripts.Inserts(obj_excel.appComponent_data)
+inserts = dbscripts.Inserts(obj_excel.appComponent_data)
 
-# with open('appcomponent_inserts.sql', 'w') as file:
-#     file.write(inserts)
+with open('appcomponent_inserts.sql', 'w') as file:
+    file.write("begin transaction;\n")
+    file.write(inserts)
+    file.write("\nrollback transaction;\n")
 
 # -----------------------------------------------
 #Build updates
 #  updates should be straight forward, and they are not supposed to fail
 
-updates = dbscripts.Updates(obj_excel.appComponent_data)
-with open('appcomponent_updates.sql', 'w') as file:
-    file.write(updates)
+# updates = dbscripts.Updates(obj_excel.appComponent_data)
+# with open('appcomponent_updates.sql', 'w') as file:
+#     file.write(updates)
 
 # -----------------------------------------------
 #Build migrations
 
 
-quit()
+
