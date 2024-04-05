@@ -1,0 +1,16 @@
+to create a virtual environment:
+    mkdir myproject
+    cd myproject
+    python3 -m venv venv
+
+(On Windows)
+    py -3 -m venv venv
+
+Then activate the environment:
+    . venv/bin/activate
+
+(On Windows)
+    venv/bin/activate
+
+Execute:
+    flask run
