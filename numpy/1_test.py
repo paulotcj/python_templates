@@ -7,6 +7,7 @@ print(arr)
 print('----------------------------------------------')
 
 import numpy as np
+import numpy as np
 
 arr2 = np.array([1,2,3,4,5])
 print(arr2) 
@@ -328,3 +329,109 @@ print(arr_view_2)
 
 
 print('----------------------------------------------')
+
+
+arr = np.array([1, 2, 3, 4, 5])
+
+x = arr.copy()
+y = arr.view()
+w = arr
+
+print(f'x.base: {x.base}')
+print(f'y.base: {y.base}')
+print(f'w.base: {w.base}')
+
+
+print('----------------------------------------------')
+
+arr = np.array(
+    [
+        [1, 2, 3, 4], 
+        [5, 6, 7, 8]
+     ])
+
+print(arr.ndim)
+print(arr.shape)
+
+print('----------------------------------------------')
+
+arr = np.array([1,2,3,4], ndmin= 5)
+
+print(arr.ndim)
+print(arr.shape)
+
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+new_arr = arr.reshape(4, 3)
+print(new_arr)
+print('---')
+new_arr = arr.reshape(3,4)
+print(new_arr)
+
+print('----------------------------------------------')
+
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+new_arr = arr.reshape(2,3,2)
+
+print(new_arr)
+
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+new_arr = arr.reshape(2, 4)
+print(new_arr.base) #returns view
+
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+
+new_arr = arr.reshape(2,4)
+print(new_arr)
+print('---')
+new_arr = arr.reshape(2,-1)
+print(new_arr)
+print('---')
+new_arr = arr.reshape(2, 2, -1)
+print(new_arr)
+print('---')
+# new_arr = arr.reshape(2, -1, -1)
+# print(new_arr)
+print('----------------------------------------------')
+
+arr = np.array(
+    [
+        [1, 2, 3], 
+        [4, 5, 6],
+        [2, 1, 0]
+     ])
+
+new_arr = arr.reshape(-1)
+
+print(new_arr)
+
+print('----------------------------------------------')
+
+arr = np.array(
+    [
+        [1, 2, 3], 
+        [4, 5, 6],
+        [2, 1, 0]
+     ])
+new_array = arr.flatten()
+print(new_array)
+
+print('----------------------------------------------')
+
+arr = np.array([[1,2,3], [4,5,6]])
+
+new_arr1 = arr.flatten('F')
+new_arr2 = arr.flatten()
+new_arr3 = arr.flatten('C')
+
+print(new_arr1)
+print(new_arr2)
+print(new_arr3)
