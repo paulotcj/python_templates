@@ -435,3 +435,26 @@ new_arr3 = arr.flatten('C')
 print(new_arr1)
 print(new_arr2)
 print(new_arr3)
+
+print('----------------------------------------------')
+arr1 = np.array([[1, 2, 3], [4, 5, 6]])
+arr2 = np.array([[7, 8, 9], [10, 11, 12]])
+
+
+concatenated_array = np.concatenate((arr1.flatten(), arr2.flatten()))
+
+print(arr1)
+print(arr2)
+print(concatenated_array)
+
+print('----------------------------------------------')
+
+arr = np.array([[1, 2, 3],
+                           [4, 5, 6]])
+
+arr_zeros = np.zeros_like(arr)
+
+print(arr_zeros)
+
+arr_flatten_zeroes = np.zeros_like(arr.flatten())
+print(arr_flatten_zeroes)   
