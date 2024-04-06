@@ -503,5 +503,19 @@ print(arr.ravel)
 print(arr.ravel())
 print(arr.ravel(order = 'F'))
 
+print('----------------------------------------------')
+
+arr = np.arange(12).reshape(2, 6) 
+print(arr)
+
+arr_1 = np.rot90(arr)
+print(arr_1)
+
+arr_2 = np.rot90(arr, k = 2)
+print(arr_2)
+
+arr_3 = np.rot90(arr, k = 3)
+print(arr_3)
+
 
 
