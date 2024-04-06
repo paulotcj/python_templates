@@ -486,5 +486,22 @@ print('----------------------------------------------')
 arr = np.arange(10, 25, 5) #from 10 to 25 with steps of 5 and 25 not included
 print(arr) # 10 15 20
 
+print('----------------------------------------------')
+
+arr = np.arange(15).reshape(3, 5) 
+print(arr)
+
+print(arr.ravel())
+
+print('----------------------------------------------')
+
+
+arr = np.arange(15).reshape(3, 5) 
+print(arr)
+
+print(arr.ravel)
+print(arr.ravel())
+print(arr.ravel(order = 'F'))
+
 
 
