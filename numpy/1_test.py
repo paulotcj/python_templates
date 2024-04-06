@@ -450,7 +450,7 @@ print(concatenated_array)
 print('----------------------------------------------')
 
 arr = np.array([[1, 2, 3],
-                           [4, 5, 6]])
+                [4, 5, 6]])
 
 arr_zeros = np.zeros_like(arr)
 
@@ -458,3 +458,33 @@ print(arr_zeros)
 
 arr_flatten_zeroes = np.zeros_like(arr.flatten())
 print(arr_flatten_zeroes)   
+
+print('----------------------------------------------')
+
+
+arr = np.array([[4, 12, 8],
+                [5, 9, 10],
+                [7, 6, 11]])
+
+max_1 = arr.max()
+max_2 = arr.flatten().max()
+
+print(max_1)
+print(max_2)
+
+print('----------------------------------------------')
+
+arr = np.arange(15)
+print(arr)
+
+print('----------------------------------------------')
+
+arr = np.arange(5, 10) #10 not included
+print(arr)
+print('----------------------------------------------')
+
+arr = np.arange(10, 25, 5) #from 10 to 25 with steps of 5 and 25 not included
+print(arr) # 10 15 20
+
+
+
