@@ -145,3 +145,35 @@ arr = np.vstack((arr1, arr2))
 
 
 print(arr)
+
+print('----------------------------------------------')
+
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6])
+
+arr = np.dstack((arr1,arr2))
+
+print(arr)
+
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+arr1 = np.array_split(arr, 3)
+print(arr1)
+print(type(arr1))
+
+print('----------------------------------------------')
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+arr1 = np.array_split(arr, 5)
+print(arr1)
+
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5, 6])
+arr1 = np.array_split(arr, 3)
+print(arr1)
+print(arr1[0])
+print(arr1[1])
+print(arr1[2])
