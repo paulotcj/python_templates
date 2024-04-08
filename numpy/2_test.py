@@ -299,3 +299,8 @@ print('----------------------------------------------')
 arr = np.array([True, False, True]) #false can be considered 0 and true = 1, so we should see False, True, True
 
 print(np.sort(arr))
+
+print('----------------------------------------------')
+arr = np.array([[3, 2, 4], [5, 0, 1]]) #the arrays itself won't be sorted, but its content will
+
+print(np.sort(arr))  #exspected output: [[2 3 4] [0 1 5]]
