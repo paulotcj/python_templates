@@ -58,3 +58,9 @@ random.shuffle(arr)
 
 print(arr)
 
+print('----------------------------------------------')
+
+arr = np.array([1, 2, 3, 4, 5])
+x = random.permutation(arr)
+print(type(x))
+print(x)
