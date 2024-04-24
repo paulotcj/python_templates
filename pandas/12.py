@@ -130,5 +130,11 @@ print('----------------------------------------------')
 print('Fill in two values with missing data')
 print(oil_series)
 print('----')
+# elements that are not in[51.44, 47.83]
+# and replace them with pd.NA
 oil_series = oil_series.where(~oil_series.isin([51.44, 47.83]), pd.NA)
 print(oil_series)
+
+print('----------------------------------------------')
+print('Total of NA values in series')
+print(oil_series.isna().sum())
