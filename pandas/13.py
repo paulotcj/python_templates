@@ -116,3 +116,39 @@ x = (transactions.query(
     .loc[:, "transactions"]
     .sum())
 print(x)
+
+
+print('----------------------------------------------')
+print('Sort dataframe by date in ascending order, and trasactions in descending order')
+
+x = transactions.sort_values(['date', 'transactions'], ascending=[True, False])
+print(x)
+
+print('----------------------------------------------')
+print('sort columns')
+x = transactions.sort_index(axis=1, ascending=False)
+print(x)
+print('----')
+x = transactions.sort_index(axis=1, ascending=True)
+print(x)
+
+print('----------------------------------------------')
+
+print('rename columns and reindex where axis=1 reorders the columns')
+print(transactions.head())
+print('----')
+x = transactions =(transactions
+ .rename(
+    columns={"transactions": "transaction_count", "store_nbr": "store_number"})
+ .reindex(labels=["date", "transaction_count", "store_number"], axis=1)
+)
+
+print(x.head())
+
+print('----------------------------------------------')
+
+
+
+
+# print('----------------------------------------------')
+
