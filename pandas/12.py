@@ -138,3 +138,63 @@ print(oil_series)
 print('----------------------------------------------')
 print('Total of NA values in series')
 print(oil_series.isna().sum())
+
+
+print('----------------------------------------------')
+print('Fill in missing values with median')
+print(f'oil series median: {oil_series.median()}')
+print(oil_series.fillna(oil_series.median()))
+
+print('----------------------------------------------')
+
+# Define a function that returns 'Buy' if price below limit, 'Wait' if not.
+
+def buy_bool(price, limit):
+    print(f'price: {price}, limit: {limit}')
+    if price < limit:
+        return "Buy"
+    return "Wait"
+
+# Apply function to OIl Series, args = to specify arguments - make sure to pass a list or tuple to args
+# note: the first argument is the value of the series, the second is the limit, in other words
+#  the first and only value provided in the args tuple
+oil_series.apply(buy_bool, args=(oil_series.quantile(0.9),))
+
+print(oil_series.apply(buy_bool, args=(oil_series.quantile(0.9),)))
+
+
+print('----------------------------------------------')
+
+print('using lambda')
+print(oil_series.apply(lambda x: "Buy" if x < oil_series.quantile(0.9) else "Wait"))
+
+print('----------------------------------------------')
+print('Chain Pandas where to specify complementary logic.')
+# First where - if test returns FALSE (not one of these dates), multiply by 1.1
+# Second where - if inverted test returns FALSE (is one of these dates) multiply by .9
+
+
+print(
+    (
+    oil_series
+        .where( oil_series.index.isin(["2016-12-23", "2017-05-10"]), oil_series * 1.1)
+        .where(~oil_series.index.isin(["2016-12-23", "2017-05-10"]), oil_series * .9)
+    )
+)
+
+print('----------------------------------------------')
+
+print('Use NumPy where to modify price based on dates.')
+# if price in list, multiply by .9
+# if price not in list, multiply by 1.1
+# Convert NumPy array returned by np.where to Series
+
+print(
+    pd.Series(
+        np.where(
+            oil_series.index.isin(["2016-12-23", "2017-05-10"]),
+            oil_series * 0.9, #if true
+            oil_series * 1.1, #if false
+        )
+    )
+)
