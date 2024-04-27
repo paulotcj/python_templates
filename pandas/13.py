@@ -146,9 +146,102 @@ x = transactions =(transactions
 print(x.head())
 
 print('----------------------------------------------')
+print('creating new columns')
+transactions["pct_to_target"] = transactions.loc[:, "transaction_count"] / 2500
+transactions["met_target"] = transactions.loc[:, "pct_to_target"] >= 1
+transactions["bonus_payable"] = 100 * transactions["met_target"]
+print(transactions.head())
+print('----')
+print(transactions.info())
+print('Converting a column to a specific data type')
+transactions["date"] = transactions["date"].astype("datetime64[ns]")
+transactions["month"] = transactions["date"].dt.month
+transactions["day_of_week"] = transactions["date"].dt.dayofweek
+print(transactions.head())
+
+print('----------------------------------------------')
+
+print('sum on bonus_payable')
+print(transactions.loc[:, "bonus_payable"].sum())
+
+print('----------------------------------------------')
+
+# All days in December (month = 12)
+# Sundays (day_of_week = 6) in May (month = 5)
+# Mondays (day_of_week = 0) in July (month = 7)
+
+conditions = [
+    transactions["month"] == 12, # Holiday Bonus
+    (transactions["month"] == 5) & (transactions["day_of_week"] == 6), #Corporate Month
+    (transactions["month"] == 7) & (transactions["day_of_week"] == 0)  #Summer Special
+]
+print('conditions')
+print(conditions) #conditions is a list containing 3 boolean arrays
+
+print('----')
+print('specify outcomes for each condition')
+choices = ["Holiday Bonus", "Corporate Month", "Summer Special"]
+print(choices)
+print('----')
+
+#so in this case we check for true values in the condition list, and map the corresponding choice to the transactions dataframe
+# please note that the precedence of the conditions is important, as the first condition that is true will be the one that is chosen
+transactions["seasonal_bonus"] = np.select(conditions, choices, default="None")
+
+print(transactions)
+
+print('----------------------------------------------')
+
+
+print('look at frequency of each bonus type')
+print(transactions["seasonal_bonus"].value_counts())
+
+print('----------------------------------------------')
+transactions = transactions.drop(
+    [
+        "pct_to_target",
+        "met_target",
+        "bonus_payable",
+        "month",
+        "day_of_week",
+        "seasonal_bonus",
+    ],
+    axis=1,
+)
+
+print(transactions.head())
+
+print('----------------------------------------------')
 
 
 
+transactions = transactions.assign(
+    target_pct = transactions["transaction_count"] / 2500,
+    met_target = (transactions["transaction_count"] / 2500) >= 1,
+    bonus_payable = ((transactions["transaction_count"] / 2500) >= 1) * 100,
+    month = transactions.date.dt.month,
+    day_of_week = transactions.date.dt.dayofweek,
+    seasonal_bonus = np.select(conditions, choices, default="None"),
+)
 
-# print('----------------------------------------------')
+print(transactions.head())
 
+
+print('----------------------------------------------')
+transactions.info(memory_usage="deep")
+print('----')
+print('transform the datatype to save memory')
+transactions = transactions.astype(
+    {
+        "store_number": "Int8",
+        "transaction_count": "Int16",
+        "bonus_payable": "Int8",
+        "month": "Int8",
+        "day_of_week": "Int8",
+        "seasonal_bonus": "category",
+    }
+)
+
+transactions.info(memory_usage="deep")
+
+print('----------------------------------------------')
