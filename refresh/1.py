@@ -163,8 +163,29 @@ print('----------------------------------------------')
 #        0  1  2  3  4
 list1 = [1, 2, 3, 4, 5]
 popped_element = list1.pop(2)
-print(popped_element)  # Output: 3
-print(list1)  # Output: [1, 2, 4, 5]
+print(f'Poped element: {popped_element}')  # Output: 3
+print(f'List after pop: {list1}')  # Output: [1, 2, 4, 5]
+
+
+print('----------------------------------------------')
+
+#        0  1  2  3  4
+list1 = [1, 2, 3, 4, 5]
+popped_element = list1.pop(-1)
+print(f'Poped element: {popped_element}')  
+print(f'List after pop: {list1}')  
+
+print('----------------------------------------------')
+
+#        0  1  2  3  4
+list1 = [1, 2, 3, 4, 5]
+popped_element = list1.pop(-2)
+print(f'Poped element: {popped_element}')  
+print(f'List after pop: {list1}')  
+
+print('----------------------------------------------')
+
+
 
 
 
