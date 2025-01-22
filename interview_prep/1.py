@@ -101,35 +101,100 @@ be executed before or after the execution of the original code. Decorators can b
 to check for permissions, modify or track the arguments passed to a method, logging the 
 calls to a specific method, etc.
 '''
-def my_decorator(func):
-    def wrapper(*args, **kwargs):
-        print("Something is happening before the function is called.")
-        result = func(*args, **kwargs)
-        print("Something is happening after the function is called.")
-        return result
+
+#----------------------------
+def simple_decorator(func):
+    #----------------------------
+    def wrapper():
+        print(f'inside decorator and before function call')
+        func()
+        print(f'inside decorator and after function call')
+    #----------------------------
+    
     return wrapper
+#----------------------------
+#----------------------------
+@simple_decorator
+def greet():
+    print('Hello from greet function')
+#----------------------------
 
-@my_decorator
-def say_hello(name):
-    print(f"Hello, {name}!")
-
-say_hello("Alice")
+greet()
 
 print('-------------------------------------------------------------------------')
 
-import time
 
-def timing_decorator(func):
-    def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        print(f"Function {func.__name__} took {end_time - start_time} seconds to execute.")
-        return result
-    return wrapper
+'''
+Suppose lst is [2, 33, 222, 14, 25], What is lst[-1]?
+25. Negative numbers mean that you count from the right instead of the left. So, lst[-1] 
+refers to the last element, lst[-2] is the second-last, and so on.
+'''
 
-@timing_decorator
-def compute_square(n):
-    return [i * i for i in range(n)]
+lst = [2, 33, 222, 14, 25]
 
-compute_square(10000)
+print(f'lst[-1]:{lst[-1]}')
+
+
+print('-------------------------------------------------------------------------')
+
+'''
+Given the list lst = [1, 2, 3, 4, 4, 6, 7, 3, 4, 5, 2, 7], return only the unique values 
+in the list.
+
+set(lst) - one answer. The limitation of this solution is that values should be hashable.
+Another answer is to iterate through the list and use an intermediate list to store the 
+current value. Then for every next value, check if it's added already.
+'''
+
+lst = [1, 2, 3, 4, 4, 6, 7, 3, 4, 5, 2, 7]
+# Option 1: Using set
+unique_from_set = sorted(list( set(lst) ))
+print(f'unique_from_set using set(): {unique_from_set}')
+
+# Option 2: Using list comprehension and a temporary list
+unique_values_list = []
+[   
+    unique_values_list.append(x)
+    for x in lst
+    if x not in unique_values_list
+]
+unique_values_list = sorted(unique_values_list)
+print(f'unique_values_list using list comprehension:{unique_values_list}')
+# exit()
+
+# Option 3: Using a dictionary to maintain order
+unique_values_list = list( dict.fromkeys(lst) )
+print(f'unique_values_list using a dict:{unique_values_list}')
+
+
+print('-------------------------------------------------------------------------')
+'''
+What's lambda?
+Lambda in Python is an anonymous function created at runtime.
+'''
+
+add_lambda = lambda x,y: x+y
+
+result_lambda = add_lambda(x = 3 , y = 5)
+print(f'The result of the lambda function is: {result_lambda}')
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+Explain *args and **kwargs
+Although, there is no formal rule on calling them *args/**kwargs, people tend to name them 
+that way. When a function is declared def my_func(*args, **kwargs), args is a tuple with 
+all positional arguments passed to the function and kwargs is a dict with all keyword 
+arguments. They can be named anything as long as the unpack operators * and ** are used.
+* unpacks a tuple and ** unpacks a dict.
+'''
+
+def example_args_kwards(*args, **kwargs):
+    print(f'Positional arguments (args): {args}')
+    print(f'Keyword arguments (kwargs): {kwargs}')
+
+example_args_kwards(1,2,3, a = 4, b = 5)
+
+print('-------------------------------------------------------------------------')
+
