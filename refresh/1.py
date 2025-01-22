@@ -185,8 +185,177 @@ print(f'List after pop: {list1}')
 
 print('----------------------------------------------')
 
+list1 = [1, 2, 3, 4, 5]
+min_value = min(list1)
+print(f'min_value from a list of numbers: {min_value}')  # Output: 1
+
+print('----------------------------------------------')
+
+list2 = ['banana','apple', 'cherry']
+min_value = min(list2)
+print(f'min_value from a list of strings: {min_value}')  # Output: 'apple'
 
 
+print('----------------------------------------------')
 
 
+list3 = [[1, 2, 3], [1,1,1], [1,0], [1, 0, 0]]
+min_value = min(list3)
+print(min_value)  # Output: [1, 0]
 
+print('----------------------------------------------')
+list1 = [5, 3, 1, 4, 2]
+list1.sort()
+print(list1)  # Output: [1, 2, 3, 4, 5]
+
+print('----------------------------------------------')
+list3 = [5, 3, 1, 4, 2]
+list3.sort(reverse = True)
+list3.sort(reverse= True)
+print(list3)  # Output: [5, 4, 3, 2, 1]
+
+print('----------------------------------------------')
+list1 = [1, 2, 3, 1, 2, 1, 2, 3, 3, 3]
+count = list1.count(3)
+print(count)  # Output: 4
+
+print('----------------------------------------------')
+list2 = ['apple', 'banana', 'cherry', 'apple', 'cherry', 'cherry']
+count = list2.count('cherry')
+print(count)  # Output: 3
+
+
+print('----------------------------------------------')
+list3 = [[1, 2], [3, 4], [1, 2], [5, 6], [1, 2]]
+count = list3.count([1, 2])
+print(count)  # Output: 3
+
+print('----------------------------------------------')
+
+list1 = [1, 2, 3, 1, 2, 1, 2, 3, 3, 3]
+count = list1.count(7)
+print(count)  
+
+print('----------------------------------------------')
+
+list1 = [1,2,3,4,3,5]
+# list1.remove(7) #this will result in an error
+list1.remove(3) #removes only the first occurrence
+print(list1) 
+
+
+print('----------------------------------------------')
+list3 = [[1, 2], [3, 4], [1, 2], [5, 6], [1, 2]]
+list3.remove([1, 2])
+print(list3)  # Output: [[3, 4], [1, 2], [5, 6], [1, 2]]
+
+print('----------------------------------------------')
+
+list3 = [{'cherry':1}, {'apple':2}, {'banana':3}, {'apple':2}]
+list3.remove({'banana':3})
+print(list3) 
+
+print('----------------------------------------------')
+list1 = [1,2,3,4,3,5]
+if 7 in list1: #in order to avoid error
+    list1.remove(7)
+print(list1) 
+
+print('----------------------------------------------')
+
+list1 = [1, 2, 3, 4, 5]
+list1.reverse()
+print(list1)  # Output: [5, 4, 3, 2, 1]
+
+print('----------------------------------------------')
+list2 = ['apple', 'banana', 'cherry']
+list2.reverse()
+print(list2)  # Output: ['cherry', 'banana', 'apple']
+print('----------------------------------------------')
+list3 = [[1, 2], [3, 4], [5, 6]]
+list3.reverse()
+print(list3)  # Output: [[5, 6], [3, 4], [1, 2]]
+
+print('----------------------------------------------')
+list1 = [1, 3, 2, 5 , 4]
+list1.reverse()
+print(list1)
+
+
+print('----------------------------------------------')
+
+#         0  1  2  3  4  5  6  7
+list1 = [ 1, 2, 3, 4, 5, 6, 7, 8]
+print(list1[2]) # Output: 3
+print(list1[2:5]) # Output: [3, 4, 5] - 5 is not inclusive
+print(list1[2:7:2]) # Output: [3, 5, 7] - 7 is not inclusive
+print(list1[2:]) # Output: [3, 4, 5, 6, 7, 8]
+print(list1[:5]) # Output: [1, 2, 3, 4, 5] - 5 is not inclusive
+print(list1[:]) # Output: [1, 2, 3, 4, 5, 6, 7, 8]
+print(list1[::2]) # Output: [1, 3, 5, 7]
+print(list1[::3]) # Output: [1, 4, 7]
+print(list1[::-1]) # Output: [8, 7, 6, 5, 4, 3, 2, 1]
+print(list1[-1]) # Output: 8
+print(list1[-3]) # Output: 6
+print(list1[-3:]) # Output: [6, 7, 8]
+print(list1[-3::-1]) # Output: [6, 5, 4, 3, 2, 1]
+print(list1[:-3]) # Output: [1, 2, 3, 4, 5]
+
+print('----------------------------------------------')
+a = 10
+b = 3
+print(a / b)  # Output: 3.3333333333333335
+
+print('----------------------------------------------')
+a = 10
+b = 3
+print(a // b)  # Output: 3
+
+print('----------------------------------------------')
+a = 10
+b = 3
+print(a % b)  # Output: 3
+
+print('----------------------------------------------')
+a = 2
+b = 3
+print(a ** a)  # Output: 4
+print(a ** b)  # Output: 4
+
+print('----------------------------------------------')
+a = 0  # In a boolean context, 0 is False
+b = 5  # Non-zero values are True
+print(a and b)  # Output: 0
+print(a or b)   # Output: 5
+print(not a)    # Output: True
+print('----------------------------------------------')
+a = 2
+b = 3
+print(a and b)  # Output: 0
+print(a or b)   # Output: 5
+print(not a)    # Output: True
+
+print('----------------------------------------------')
+print('bitwise AND')
+a = 60  # 60 = 0011 1100 in binary
+b = 13  # 13 = 0000 1101 in binary
+#              0000 1100
+
+print( a & b ) # Output: 12 (0000 1100)
+
+print('----------------------------------------------')
+print('bitwise OR')
+a = 60  # 60 = 0011 1100 in binary
+b = 13  # 13 = 0000 1101 in binary
+#              0011 1101
+
+print( a | b ) # Output: 61 (0011 1101)
+
+print('----------------------------------------------')
+print('bitwise XOR')
+a = 60  # 60 = 0011 1100 in binary
+b = 13  # 13 = 0000 1101 in binary
+#              0011 0001
+print(a ^ b)  # Output: 49 (0011 0001)
+
+print('----------------------------------------------')
