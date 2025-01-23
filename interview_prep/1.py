@@ -476,10 +476,30 @@ Essential for Python development: Most Python projects rely on external librarie
 
 
 
-
+print('-------------------------------------------------------------------------')
 '''
 CheeseShop? What is that?
 
 In the Python world, "CheeseShop" is a playful, unofficial term that refers to PyPI, the 
 Python Package Index.
+'''
+
+print('-------------------------------------------------------------------------')
+'''
+What are virtualenvs?
+
+A virtual environment is an isolated space where you can install and manage project-specific 
+packages without affecting your system-wide Python installation or other projects.
+'''
+
+
+print('-------------------------------------------------------------------------')
+
+'''
+What are modules and packages in Python?
+
+A module in Python is any file with .py extension. A package is a set of modules - a 
+directory that contains one or many .py files, one of which is __init__.py
+Both modules and packages define functions, classes or any kind of software functionality.
+When we import something in Python, we import from packages and modules.
 '''
