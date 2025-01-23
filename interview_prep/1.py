@@ -198,3 +198,288 @@ example_args_kwards(1,2,3, a = 4, b = 5)
 
 print('-------------------------------------------------------------------------')
 
+
+
+'''
+Is this valid in Python and why?
+
+def my_function():
+    print my_function.what
+my_function.what = "right?"
+my_function() # Prints "right?"
+-------------
+It is valid. In Python, everything is an object, including functions. But if we don't 
+have what defined, we will get an Attribute error.
+'''
+
+def my_weird_function():
+    print(f'my_weird_function.weird_part: {my_weird_function.weird_part}')
+
+my_weird_function.weird_part = "This is weird isn't it?"
+
+my_weird_function()
+
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+Given variables a and b, switch their values so that b has the value of a, and a has the 
+value of b without using an intermediary variable.
+
+a, b = b, a
+'''
+
+x = 3
+y = 5
+print(f'x:{x}, y:{y}')
+
+x , y = y , x
+print('after swap')
+print(f'x:{x}, y{y}')
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+
+How would you xor in Python?
+XOR Truth Table:
+A | B | A XOR B
+--|---|--------
+0 | 0 |   0
+0 | 1 |   1
+1 | 0 |   1
+1 | 1 |   0
+'''
+
+print('XOR using ^')
+for x in (True, False):
+    for y in (True, False):
+        result = x ^ y
+        print(f'x:{x}\t\ty:{y}\t\tresult:{result}')
+
+import operator
+
+print('\n\nXOR using operator operator.xor()')
+for x in (True, False):
+    for y in (True, False):
+        result = operator.xor(y,x)
+        print(f'x:{x}\t\ty:{y}\t\tresult:{result}')
+
+print('\n\nXOR using IF')
+for x in (True, False):
+    for y in (True, False):
+        if (x == True and y == True) or (x == False and y == False):
+            result = False
+        elif (x == False and y == True) or (x == True and y == False):
+            result = True
+        
+        print(f'x:{x}\t\ty:{y}\t\tresult:{result}')
+
+print('\n\nXOR using logic')
+for x in (True, False):
+    for y in (True, False):
+        result = x != y
+        print(f'x:{x}\t\ty:{y}\t\tresult:{result}')
+
+
+
+print('-------------------------------------------------------------------------')
+
+'''
+What is introspection/reflection and does Python support it?
+
+Introspection is the ability to examine an object at runtime. Python has a dir() function that 
+supports examining the attributes of an object, type() to check the object type, isinstance(), etc.
+While introspection is passive examination of the objects, reflection is a more powerful tool 
+where we could modify objects at runtime and access them dynamically. E.g.
+    setattr() adds or modifies an object's attribute;
+    getattr() gets the value of an attribute of an object.
+
+It can even invoke functions dynamically - getattr(my_obj, "my_func_name")()
+'''
+
+class MyClass:
+    def __init__(self, value):
+        self.value = value
+
+    def my_method(self):
+        return f'My value is {self.value}'
+
+obj = MyClass(10)
+print(obj.my_method())
+
+
+#introspection
+# Using dir() to list attributes and methods
+print(f'Attributes and methods of obj: {dir(obj)}')
+
+# Using type() to get the type of the object
+print(f'Type of obj: {type(obj)}')
+
+# Using isinstance() to check if obj is an instance of MyClass
+print(f'Is obj an instance of MyClass? {isinstance(obj, MyClass)}')
+
+# reflection
+# Using getattr() to get the value of an attribute
+print(f'Value of obj.value: {getattr(obj, "value")}')
+
+# Using setattr() to set the value of an attribute
+setattr(obj, 'value', 20)
+print(f'New value of obj.value: {obj.value}')
+
+# Using hasattr() to check if an attribute exists
+print(f'Does obj have attribute "value"? {hasattr(obj, "value")}')
+
+# Using getattr() to call a method dynamically
+method = getattr(obj, 'my_method')
+print(f'Result of calling obj.my_method(): {method()}')
+
+
+# Using getattr() to call a method dynamically
+method = getattr(obj, 'my_method')
+obj = None
+print(f'Result of calling obj.my_method(): {method()}')
+
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+One thing about python OOP is that it doesn't support true private attributes/methods. 
+How do we circumvent this limitation?
+
+There is a convention if we prefix the name with an underscore, it's considered private.
+'''
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+What's a Mixin?
+
+Mixin is a concept in Programming in which the class provides functionalities but it is 
+not meant to be used for instantiation. The main purpose of the Mixin is to provide 
+functionalities which are standalone and it would be best if the mixins themselves do 
+not have inheritance with other mixins and also avoid state.
+'''
+
+class FlyMixin:
+    def fly(self):
+        return "I can fly!"
+
+class SwimMixin:
+    def swim(self):
+        return "I can swim!"
+
+class Bird(FlyMixin):
+    def __init__(self, name):
+        self.name = name
+
+class Fish(SwimMixin):
+    def __init__(self, name):
+        self.name = name
+
+class Duck(FlyMixin, SwimMixin):
+    def __init__(self, name):
+        self.name = name
+
+# Usage
+bird = Bird("Sparrow")
+print(f'{bird.name}: {bird.fly()}')
+
+fish = Fish("Goldfish")
+print(f'{fish.name}: {fish.swim()}')
+
+duck = Duck("Mallard")
+print(f'{duck.name}: {duck.fly()} and {duck.swim()}')
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+What's a metaclass?
+
+In Python, a metaclass is a class that defines the behavior of other classes.
+It's a class of classes, responsible for creating class objects.
+The default metaclass for all classes in Python is type.
+
+In other words, all classes inherit from at least the class type
+and Type defines certain methods such as __new__ and __init__
+'''
+
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+
+What are the Dunder/Magic/Special methods in Python? Name a few.
+
+Dunder (derived from double underscore) methods are special/magic predefined methods in Python, 
+with names that start and end with a double underscore. There's nothing really magical about 
+them. Examples of these include:
+__init__ - constructor
+__str__, __repr__ - object representation (casting to string, printing)
+__len__, __next__... - generators
+__enter__, __exit__ - context managers
+__eq__, __lt__, __gt__ - operator overloading
+'''
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f'Values(x:{self.x}, y:{self.y})'
+
+    def __add__(self, other_obj):
+        return Point( x = self.x + other_obj.x, y = self.y + other_obj.y )
+    
+p1 = Point(x = 1, y = 2)
+p2 = Point(x = 3, y = 4)
+
+p3 = p1 + p2
+
+print(f'p1: {p1}')
+print(f'p1 + p2 = p3 = {p3}')
+exit()
+
+print('-------------------------------------------------------------------------')
+
+'''
+What is PEP8?
+
+PEP8 is a generally recognized style guide for programming in Python. It covers formatting, 
+comments, naming conventions, but also programming recommendations as well as useful tips 
+on various topics. The main aim of PEP8 is to help developers improve code readability, 
+reliability and maintainability.
+'''
+
+print('-------------------------------------------------------------------------')
+
+
+'''
+What is pip?
+
+pip is a package installer for Python
+Installs packages: It downloads and installs Python packages (libraries) from the 
+Python Package Index (PyPI) and other sources.  
+Manages packages: You can use pip to uninstall packages, update existing ones to 
+the latest versions, and manage their dependencies. 
+Essential for Python development: Most Python projects rely on external libraries for
+ various functionalities (e.g., data science, web development, machine learning). pip 
+ makes it easy to incorporate these libraries into your projects. 
+'''
+
+
+
+
+'''
+CheeseShop? What is that?
+
+In the Python world, "CheeseShop" is a playful, unofficial term that refers to PyPI, the 
+Python Package Index.
+'''
