@@ -359,3 +359,69 @@ b = 13  # 13 = 0000 1101 in binary
 print(a ^ b)  # Output: 49 (0011 0001)
 
 print('----------------------------------------------')
+
+
+
+
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+
+zipped = zip(names, ages)
+
+print(zipped)
+
+# Convert zipped object into a list to see the result
+print(list(zipped))
+
+print('----------------------------------------------')
+
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30]
+
+zipped = zip(names, ages)
+print(list(zipped))
+
+print('----------------------------------------------')
+
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+
+zipped = zip(names, ages)
+# zipped = [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
+
+names2, ages2 = zip(*zipped)
+
+print(names2)  # ('Alice', 'Bob', 'Charlie')
+print(ages2)   # (25, 30, 35)
+
+
+print('----------------------------------------------')
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+cities = ['New York', 'Los Angeles', 'Chicago']
+
+zipped = zip(names, ages, cities)
+print(list(zipped))
+
+
+print('----------------------------------------------')
+from itertools import zip_longest
+
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30]
+
+zipped = zip_longest(names, ages, fillvalue=None)
+print(list(zipped))
+
+
+zipped = zip_longest(names, ages, fillvalue='NOT PROVIDED')
+print(list(zipped))
+
+
+
+print('----------------------------------------------')
+keys = ['name', 'age', 'city']
+values = ['Alice', 25, 'New York']
+
+dictionary = dict(zip(keys, values))
+print(dictionary)
